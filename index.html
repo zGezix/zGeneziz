@@ -898,7 +898,7 @@ document.addEventListener('click',e=>{if(e.target.closest('button'))sfx('click')
 /* ================= Board items & rewind ================= */
 const ITEMS={
   potion:{l:'p',name:'ยาคืนชีพ',desc:'ชุบชีวิตหมาก 1 ตัวที่แถวบ้าน',col:0xff6a8a,css:'#d9506f'},
-  bomb:{l:'b',name:'ม้วนสายฟ้า',desc:'ฟาดศัตรูที่บุกเข้ามาลึกที่สุด',col:0xffd34a,css:'#b8901c'},
+  bomb:{l:'b',name:'ม้วนสายฟ้า',desc:'ช็อตศัตรูแนวหน้า 1 ตัวให้มึนงง 1 ตา และทำลายบาเรียร์ของมัน',col:0xffd34a,css:'#b8901c'},
   ice:{l:'i',name:'ระฆังน้ำแข็ง',desc:'แช่แข็งศัตรูแนวหน้า 2 ตัว',col:0x8fd8ff,css:'#3f86c4'},
   stone:{l:'s',name:'หินผู้พิทักษ์',desc:'ให้บาเรียร์หมากแนวหน้า 2 ตัว',col:0x7fe0c0,css:'#2f8f76'},
   chest:{l:'c',name:'กล่องการ์ด',desc:'เปิดการ์ดพลังให้หมากที่เลือกไว้',col:0xc58aff,css:'#7d52c4'}};
@@ -992,9 +992,12 @@ async function applyItem(side,k,target){
     if(c<0)return;const p=posOf(home,c);beam(p,0xff8aa8,1,.5);
     for(let i=0;i<26;i++)particle({tex:i%3?null:'star',color:0xffb3c6,pos:p.clone().add(V((Math.random()-.5)*.7,0,(Math.random()-.5)*.7)),vel:V(0,1.5+Math.random()*2,0),life:.9,s0:.25,s1:0});
     await sleep(300);const n=makePiece(side,home,c);board[home][c]=n;n.v.g.scale.setScalar(.01);await tween(420,t=>n.v.g.scale.setScalar(Math.max(.01,backOut(t))));return}
-  if(k==='bomb'){const t=frontline(side,true,1)[0];if(!t)return;const tp=t.v.g.position.clone();
+  if(k==='bomb'){const t=frontline(side,true,1,q=>!q.frozen)[0]||frontline(side,true,1)[0];if(!t)return;const tp=t.v.g.position.clone();
     for(let i=0;i<2;i++){bolt(tp.clone().add(V((Math.random()-.5)*.6,9,(Math.random()-.5)*.6)),tp.clone().add(V(0,.2,0)),0xffe98a,.4);await sleep(120)}
-    sfx('thunder');flash(.5,350);shake(.35);const ab=resolveHit(t,side);onHit(t,ab,{p:side,leg:null,back:false},'thunder');await sleep(450);if(t.v.dying)await t.v.dying;return}
+    sfx('thunder');flash(.4,300);shake(.25);shock(tp,0xffe98a,1.6,.5);sparks(tp,0xffe98a,24,3);
+    if(t.shield){t.shield=false;toast('สายฟ้าทำลายบาเรียร์!')}t.frozen=1;syncVisual(t);
+    for(let j=0;j<8;j++)particle({tex:'star',color:0xffe98a,pos:tp.clone().add(V(Math.cos(j)*.3,.55,Math.sin(j)*.3)),life:1,s0:.25,s1:0},true);
+    toast('ศัตรูโดนช็อตมึนงง 1 ตา');await sleep(600);return}
   if(k==='ice'){sfx('freeze');for(const t of frontline(side,true,2,q=>!q.frozen)){t.frozen=1;syncVisual(t);const ice=t.v.ice;ice.scale.setScalar(.01);tween(350,x=>ice.scale.set(backOut(x),backOut(x)*.7,backOut(x)));freezeFx(t.v.g.position.clone())}await sleep(700);return}
   if(k==='stone'){sfx('shield');for(const t of frontline(side,false,2,q=>!q.shield)){t.shield=true;syncVisual(t);const s=t.v.shieldG;s.scale.setScalar(.01);tween(450,x=>s.scale.setScalar(Math.max(.01,backOut(x))));shock(t.v.g.position.clone(),0x8fe3f7,1.4,.5,.25)}await sleep(700);return}
   if(k==='chest'){forceCard=true;if(target){shock(target.v.g.position.clone(),0xc58aff,1.6,.5);sparks(target.v.g.position.clone(),0xc58aff,24,3)}await sleep(400);return}
