@@ -57,7 +57,7 @@ button:disabled{opacity:.5;cursor:default}
 @keyframes comboPop{0%{transform:translate(-50%,-50%) scale(2.6) rotate(-8deg);opacity:0}15%{transform:translate(-50%,-50%) scale(1) rotate(-4deg);opacity:1}75%{transform:translate(-50%,-50%) scale(1.05) rotate(-4deg);opacity:1}100%{transform:translate(-50%,-80%) scale(.9) rotate(-4deg);opacity:0}}
 #flash{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:40}
 #cut{position:fixed;inset:0;z-index:45;width:100%;height:100%;background:#000}
-.overlay{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;background:rgba(40,52,50,.4);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.overlay{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;background:rgba(30,40,38,.55)}
 .panel{background:var(--paper);border-radius:20px;padding:22px 20px;max-width:440px;width:calc(100% - 32px);box-sizing:border-box;box-shadow:0 20px 50px rgba(30,40,38,.25);max-height:86vh;overflow:auto}
 .panel h2{font-family:var(--display);font-weight:600;font-size:22px;margin:0 0 6px;text-wrap:balance}
 .panel h3{font-family:var(--display);font-weight:500;font-size:15px;margin:14px 0 6px}
@@ -85,8 +85,8 @@ input[type=text]{width:100%;box-sizing:border-box;font:500 16px var(--body);padd
 #skinOv .panel{max-height:56vh;border-radius:20px 20px 0 0;width:100%;max-width:560px}
 .bsw{width:46px;height:46px;padding:0;border-radius:10px;border:3px solid transparent;overflow:hidden}
 .bsw.sel{border-color:var(--ink)}
-#cards{background:radial-gradient(circle at 50% 50%,rgba(40,36,96,.82),rgba(6,6,18,.94));overflow:hidden;backdrop-filter:blur(4px)}
-#cards .rays{position:absolute;left:50%;top:50%;width:220vmax;height:220vmax;margin:-110vmax 0 0 -110vmax;background:repeating-conic-gradient(from 0deg,rgba(255,236,190,.09) 0 5deg,transparent 5deg 16deg);animation:spin 26s linear infinite;pointer-events:none}
+#cards{background:radial-gradient(circle at 50% 50%,rgba(40,36,96,.9),rgba(6,6,18,.97));overflow:hidden}
+#cards .rays{position:absolute;left:50%;top:50%;width:150vmax;height:150vmax;margin:-75vmax 0 0 -75vmax;will-change:transform;background:repeating-conic-gradient(from 0deg,rgba(255,236,190,.09) 0 5deg,transparent 5deg 16deg);animation:spin 26s linear infinite;pointer-events:none}
 #cards.legend .rays{background:repeating-conic-gradient(from 0deg,rgba(255,214,120,.28) 0 5deg,transparent 5deg 14deg);animation-duration:8s}
 #cards.legend{animation:quake .45s}
 .cwrap{position:relative;display:flex;flex-direction:column;align-items:center;gap:18px;width:100%}
@@ -109,12 +109,12 @@ input[type=text]{width:100%;box-sizing:border-box;font:500 16px var(--body);padd
 .front>*{position:relative;z-index:1}
 .r-common .front{border:3px solid #d5ccb9;box-sizing:border-box}
 .r-rare .front{border:3px solid var(--c);box-sizing:border-box}
-.r-rare.flip{filter:drop-shadow(0 0 14px var(--c))}
+.r-rare.flip .front{box-shadow:0 0 18px 2px var(--c),0 12px 30px rgba(0,0,0,.45)}
 .r-legend .front{background:#0b0a1f;color:#f6e7bf}
 .r-legend .front::before{content:"";position:absolute;left:-50%;top:-50%;width:200%;height:200%;background:conic-gradient(#f7d98b,#7b5d22,#fff3c8,var(--c),#f7d98b);animation:spin 2.6s linear infinite;z-index:0}
 .r-legend .front::after{content:"";position:absolute;inset:3px;border-radius:11px;background:linear-gradient(165deg,#2a2468,#0d0b26 70%);z-index:0}
-.r-legend.flip{filter:drop-shadow(0 0 24px #f2c86a)}
-.shine{position:absolute;inset:0;z-index:2!important;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);background-size:250% 100%;animation:shine 2.2s ease-in-out infinite;pointer-events:none;mix-blend-mode:overlay}
+.r-legend.flip .front{box-shadow:0 0 28px 4px #f2c86a,0 12px 30px rgba(0,0,0,.45)}
+.shine{position:absolute;inset:0;z-index:2!important;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);background-size:250% 100%;animation:shine 2.2s ease-in-out infinite;pointer-events:none;opacity:.5}
 .art{flex:0 0 50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 55%,color-mix(in srgb,var(--c) 70%,#fff),var(--c) 60%,color-mix(in srgb,var(--c) 65%,#000));overflow:hidden}
 .r-legend .art{background:radial-gradient(circle at 50% 55%,color-mix(in srgb,var(--c) 75%,#fff),color-mix(in srgb,var(--c) 45%,#120f36) 55%,#0d0b26);margin:3px 3px 0;border-radius:11px 11px 0 0}
 .art svg{width:56%;height:auto;stroke:#fff;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 6px rgba(255,255,255,.7))}
@@ -264,7 +264,7 @@ input[type=text]{width:100%;box-sizing:border-box;font:500 16px var(--body);padd
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script src="https://unpkg.com/mqtt@5.10.1/dist/mqtt.min.js"></script>
 <script>
 (function(){
 const $=id=>document.getElementById(id);
@@ -1249,54 +1249,60 @@ function aiStep(){
 /* ================= Online (room presence sync) ================= */
 const net={room:null,nroom:null,code:'',role:null,side:-1,ep:0,seq:0,oppHere:false,oppSeen:false,pending:null,unsub:null,myPeer:null,lastPub:null,lastEv:null,countedEp:0,req:null,reqDone:0,lastFF:null,oppSel:null,oppAct:false};
 let roomP=null;
-function getRoom(){return Promise.resolve(window.Peer?{}:null)}
-/* PeerJS room: the host's peer is the hub; it relays every player's presence to the others */
-const PEER_PREFIX='hosskill-v1-';
+function getRoom(){return Promise.resolve(window.mqtt?{}:null)}
+/* Online rooms over public MQTT brokers (WebSocket, relayed by the server, so it works behind any mobile/home network).
+   Each player keeps one retained "presence" message on its own topic; everyone in the room subscribes to the room's topics. */
+const MQTT_BROKERS=['wss://broker.emqx.io:8084/mqtt','wss://broker.hivemq.com:8884/mqtt','wss://test.mosquitto.org:8081'];
+const MQTT_BASE='hosskill/v2/';
 function joinPeer(code,asHost){
-  return new Promise((resolve,reject)=>{
-    let me={presence:{}},myId=null,settled=false;const peers=new Map(),hs=[],conns=new Set();let hostConn=null;
-    const list=()=>{const arr=[{peer:myId,isMe:true,sameTab:true,kind:'viewer',guest:false,by:null,presence:me.presence,updatedAt:Date.now()}];
-      for(const [id,pr] of peers)arr.push({peer:id,isMe:false,sameTab:false,kind:'viewer',guest:false,by:null,presence:pr,updatedAt:Date.now()});return arr};
-    const emit=()=>{const arr=list();hs.forEach(h=>{try{h({peers:arr,joined:[],left:[],updated:[]})}catch(e){console.error(e)}})};
-    const send=(c,m)=>{try{if(c.open)c.send(m)}catch(e){}};
-    const fail=(msg)=>{if(!settled){settled=true;try{peer.destroy()}catch(e){}reject(new Error(msg))}};
-    const peer=asHost?new Peer(PEER_PREFIX+code,{debug:0}):new Peer({debug:0});
-    const api={name:code,
-      presence:async p=>{me.presence=Object.assign({},me.presence,p);const m={t:'p',peer:myId,presence:me.presence};
-        if(asHost)conns.forEach(c=>send(c,m));else if(hostConn)send(hostConn,m);emit()},
-      onPeers:h=>{hs.push(h);setTimeout(emit,0);return()=>{const i=hs.indexOf(h);if(i>=0)hs.splice(i,1)}},
-      leave:async()=>{try{peer.destroy()}catch(e){}},peers:list,connected:()=>!peer.disconnected};
-    const timer=setTimeout(()=>fail(asHost?'สร้างห้องไม่สำเร็จ ลองใหม่อีกครั้ง':'ไม่พบห้องนี้ หรือเพื่อนยังไม่ได้สร้างห้อง'),15000);
-    peer.on('error',e=>{const t=e&&e.type;
-      if(t==='unavailable-id')fail('รหัสห้องนี้ถูกใช้อยู่ ลองสร้างใหม่');
-      else if(t==='peer-unavailable')fail('ไม่พบห้องนี้ ตรวจรหัสอีกครั้ง');
-      else if(!settled)fail('เชื่อมต่อเซิร์ฟเวอร์ไม่ได้ ตรวจเน็ตแล้วลองใหม่');
-      else toast('การเชื่อมต่อมีปัญหา')});
-    peer.on('open',id=>{myId=id;
-      if(asHost){clearTimeout(timer);settled=true;resolve(api);return}
-      hostConn=peer.connect(PEER_PREFIX+code,{reliable:true});
-      hostConn.on('open',()=>{clearTimeout(timer);if(!settled){settled=true;resolve(api)}send(hostConn,{t:'p',peer:myId,presence:me.presence})});
-      hostConn.on('data',d=>{if(!d||typeof d!=='object')return;
-        if(d.t==='p'&&typeof d.peer==='string'&&d.peer!==myId&&d.presence&&typeof d.presence==='object'){peers.set(d.peer,d.presence);emit()}
-        else if(d.t==='l'&&typeof d.peer==='string'){peers.delete(d.peer);emit()}});
-      hostConn.on('close',()=>{peers.clear();emit();if(settled)toast('หลุดจากห้อง ลองเข้าห้องใหม่ด้วยรหัสเดิม')});
+  const myId='p'+Math.random().toString(36).slice(2,10)+Date.now().toString(36).slice(-4);
+  const base=MQTT_BASE+code+'/p/',myTopic=base+myId;
+  let me={presence:{}};const peers=new Map(),hs=[];let client=null,hb=null,sweep=null,lastSent='';
+  const STALE=25000;
+  const list=()=>{const now=Date.now();const arr=[{peer:myId,isMe:true,sameTab:true,kind:'viewer',guest:false,by:null,presence:me.presence,updatedAt:now}];
+    for(const [id,v] of peers)if(now-v.seen<STALE)arr.push({peer:id,isMe:false,sameTab:false,kind:'viewer',guest:false,by:null,presence:v.pr,updatedAt:v.seen});return arr};
+  const emit=()=>{const arr=list();hs.forEach(h=>{try{h({peers:arr,joined:[],left:[],updated:[]})}catch(e){console.error(e)}})};
+  const send=()=>{if(!client||!client.connected)return;lastSent=JSON.stringify(me.presence);client.publish(myTopic,lastSent,{retain:true,qos:0})};
+  const api={name:code,
+    presence:async p=>{me.presence=Object.assign({},me.presence,p);send();emit()},
+    onPeers:h=>{hs.push(h);setTimeout(emit,0);return()=>{const i=hs.indexOf(h);if(i>=0)hs.splice(i,1)}},
+    leave:async()=>{clearInterval(hb);clearInterval(sweep);try{client.publish(myTopic,'',{retain:true,qos:0});setTimeout(()=>client.end(true),300)}catch(e){}},
+    peers:list,connected:()=>!!(client&&client.connected)};
+  const tryBroker=(i)=>new Promise((resolve,reject)=>{
+    if(i>=MQTT_BROKERS.length){reject(new Error('เชื่อมต่อเซิร์ฟเวอร์ออนไลน์ไม่ได้ ตรวจเน็ตแล้วลองใหม่'));return}
+    let done=false;
+    const c=mqtt.connect(MQTT_BROKERS[i],{clientId:myId,clean:true,keepalive:15,reconnectPeriod:2000,connectTimeout:8000,
+      will:{topic:myTopic,payload:'',retain:true,qos:0}});
+    const giveUp=setTimeout(()=>{if(done)return;done=true;try{c.end(true)}catch(e){}tryBroker(i+1).then(resolve,reject)},9000);
+    c.on('connect',()=>{
+      if(!done){done=true;clearTimeout(giveUp);client=c;c.subscribe(base+'+',{qos:0});resolve(api)}
+      else if(c===client){c.subscribe(base+'+',{qos:0});send()} // reconnected: re-assert presence
     });
-    if(asHost)peer.on('connection',conn=>{
-      conn.on('open',()=>{conns.add(conn);send(conn,{t:'p',peer:myId,presence:me.presence});for(const [id,pr] of peers)if(id!==conn.peer)send(conn,{t:'p',peer:id,presence:pr})});
-      conn.on('data',d=>{if(!d||d.t!=='p'||!d.presence||typeof d.presence!=='object')return;const pr=d.presence;
-        if(JSON.stringify(pr).length>6000)return;peers.set(conn.peer,pr);conns.forEach(c=>{if(c!==conn)send(c,{t:'p',peer:conn.peer,presence:pr})});emit()});
-      const gone=()=>{if(!conns.has(conn))return;conns.delete(conn);peers.delete(conn.peer);conns.forEach(c=>send(c,{t:'l',peer:conn.peer}));emit()};
-      conn.on('close',gone);conn.on('error',gone);
+    c.on('message',(topic,payload,packet)=>{
+      if(c!==client)return;const id=topic.slice(base.length);if(!id||id===myId)return;
+      const txt=payload&&payload.length?payload.toString():'';
+      if(!txt){if(peers.delete(id))emit();return}
+      if(txt.length>8000)return;
+      let pr;try{pr=JSON.parse(txt)}catch(e){return}
+      if(!pr||typeof pr!=='object')return;
+      peers.set(id,{pr,seen:Date.now(),live:!packet.retain});emit();
     });
-    peer.on('disconnected',()=>{try{peer.reconnect()}catch(e){}});
+    c.on('offline',()=>{if(c===client&&done)toast('การเชื่อมต่อหลุด กำลังเชื่อมใหม่…')});
+  });
+  return tryBroker(0).then(a=>{
+    hb=setInterval(()=>{if(client&&client.connected&&lastSent)client.publish(myTopic,lastSent,{retain:true,qos:0})},8000); // heartbeat keeps us "fresh"
+    sweep=setInterval(emit,5000); // drop peers that stopped sending
+    if(!asHost)setTimeout(()=>{if(![...peers.values()].some(v=>v.pr&&v.pr.role==='host'&&Date.now()-v.seen<STALE))toast('ยังไม่พบเจ้าของห้อง ตรวจรหัสห้อง หรือให้เพื่อนสร้างห้องใหม่')},8000);
+    return a;
   });
 }
+
 function presenceBase(){return {g:'hos',role:net.role,name:myName(),sk:{s:prof.skin,e:prof.emblem,f:prof.finish,h:prof.shape,a:prof.acc}}}
 function pushPresence(extra){if(!net.nroom)return;const st=serialize();
   if(extra&&extra.ev)net.lastEv=extra.ev;const ev=net.lastEv;
   const sel=(selected&&!busy&&turn===net.side&&board[selected.r][selected.c]===selected)?[selected.r,selected.c]:null;
   const p=Object.assign(presenceBase(),{ep:net.ep,seq:net.seq,st,ev,sel,act:choosingCard?'card':null});
-  if(net.role==='host'){p.wins=series.slice();p.ff=net.lastFF}else if(net.req)p.req=net.req;
+  if(net.role==='host'){p.wins=series.slice();p.ff=net.lastFF;p.opp=net.oppPeer||null}else if(net.req)p.req=net.req;
   net.lastPub=p;
   net.nroom.presence(p).catch(e=>{if(e&&e.code==='invalid_argument'){p.ev=null;net.nroom.presence(p).catch(()=>{})}})}
 function startNextOnline(ff){net.ep++;net.seq=0;net.lastEv=null;net.lastFF=ff?{ep:net.ep,side:ff.side}:null;$('overOv').hidden=true;newGame();pushPresence()}
@@ -1312,7 +1318,7 @@ async function enterRoom(code,role){
   onErr('');
   net.room=room;net.code=code;net.role=role;net.side=role==='host'?0:1;net.oppHere=false;net.oppSeen=false;net.pending=null;
   mode='online';
-  series=[0,0];net.lastEv=null;net.req=null;net.reqDone=0;net.countedEp=0;net.lastFF=null;
+  series=[0,0];net.oppPeer=null;net.lastEv=null;net.req=null;net.reqDone=0;net.countedEp=0;net.lastFF=null;
   if(role==='host'){net.ep=1;net.seq=0;started=false;names=[myName(),'รอเพื่อน…'];newGame()}
   else{net.ep=0;net.seq=-1;started=false;names=['เจ้าของห้อง',myName()];clearBoard();refresh()}
   setSides();resize();pushPresence();
@@ -1324,12 +1330,14 @@ function validPres(p){return p&&p.g==='hos'&&(p.role==='host'||p.role==='guest'|
 function onPeers(ch){
   const peers=ch.peers;const me=peers.find(p=>p.isMe&&p.sameTab);if(me)net.myPeer=me.peer;
   const others=peers.filter(p=>!p.isMe&&validPres(p.presence));
-  const host=others.find(p=>p.presence.role==='host');
-  const guests=others.filter(p=>p.presence.role==='guest').sort((a,b)=>a.peer<b.peer?-1:1);
+  const host=others.filter(p=>p.presence.role==='host').sort((a,b)=>b.updatedAt-a.updatedAt)[0];
+  const guests=others.filter(p=>p.presence.role==='guest').sort((a,b)=>b.updatedAt-a.updatedAt);
   let opp=null;
-  if(net.role==='host')opp=guests[0]||null;
-  else{
-    if(net.role==='guest'&&guests.length&&net.myPeer&&guests[0].peer<net.myPeer){net.role='spec';net.side=-1;toast('ห้องนี้มีผู้เล่นครบแล้ว คุณเข้าชมแทน');pushPresence()}
+  if(net.role==='host'){ // keep the current opponent while they are here; otherwise seat the most recent guest
+    opp=guests.find(g=>g.peer===net.oppPeer)||guests[0]||null;
+    const np=opp?opp.peer:null;if(np!==net.oppPeer){net.oppPeer=np;setTimeout(pushPresence,0)}
+  }else{
+    if(net.role==='guest'&&host&&net.myPeer&&host.presence.opp&&host.presence.opp!==net.myPeer&&guests.some(g=>g.peer===host.presence.opp)){net.role='spec';net.side=-1;toast('ห้องนี้มีผู้เล่นครบแล้ว คุณเข้าชมแทน');pushPresence()}
     opp=host||null;
   }
   const wasHere=net.oppHere;net.oppHere=!!opp;
@@ -1346,7 +1354,7 @@ function onPeers(ch){
     if(!started){started=true;$('onlineOv').hidden=true}
     if(net.role!=='host'&&host&&Array.isArray(host.presence.wins))series=[+host.presence.wins[0]||0,+host.presence.wins[1]||0];
     // spectators follow whichever player holds the newest state
-    const srcs=net.role==='spec'?[host,guests[0]].filter(Boolean):[opp];
+    const srcs=net.role==='spec'?[host,host&&guests.find(g=>g.peer===host.presence.opp)].filter(Boolean):[opp];
     for(const s of srcs)considerRemote(s.presence);
   }else if(wasHere){toast('คู่แข่งหลุดจากห้อง');}
   if(net.role==='spec'&&host){started=true;$('onlineOv').hidden=true}
@@ -1459,7 +1467,7 @@ $('btnMenu').onclick=()=>{$('startOv').hidden=false};
 $('btnOverMenu').onclick=()=>{$('overOv').hidden=true;$('startOv').hidden=false};
 $('btnHelp').onclick=()=>$('helpOv').hidden=false;$('btnHelpClose').onclick=()=>$('helpOv').hidden=true;
 function setQualityButtons(){$('qHigh').classList.toggle('sel',prof.quality!=='eco');$('qEco').classList.toggle('sel',prof.quality==='eco')}
-function setQuality(q){prof.quality=q;saveProf();Q=QUAL[q];renderer.setPixelRatio(Q.pr);
+function setQuality(q){prof.quality=q;saveProf();Q=QUAL[q];dynPR=Q.pr;renderer.setPixelRatio(Q.pr);
   if(renderer.shadowMap.enabled!==Q.shadow){renderer.shadowMap.enabled=Q.shadow;scene.traverse(o=>{if(o.material){(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.needsUpdate=true)}})}
   resize();setQualityButtons();toast(q==='eco'?'โหมดลื่นไหล: ลดความละเอียดและเงา':'โหมดภาพสวย')}
 $('qHigh').onclick=()=>setQuality('high');$('qEco').onclick=()=>setQuality('eco');setQualityButtons();
@@ -1493,7 +1501,7 @@ function resize(){
   projScale=renderer.domElement.height/(2*Math.tan(camera.fov*Math.PI/360));pools.forEach(p=>p.mat.uniforms.scale.value=projScale);
 }
 addEventListener('resize',resize);resize();
-let last=performance.now(),ambT=0;const shakeOff=new THREE.Vector3();
+let last=performance.now(),ambT=0,frameNo=0,fpsAcc=0,fpsN=0,dynPR=Q.pr;const shakeOff=new THREE.Vector3();
 (function loop(now){
   const rdt=Math.min(.05,(now-last)/1000);last=now;const dt=rdt*timeScale;const tt=now/1000;
   if(tweens.length){const list=tweens.slice();for(const tw of list){tw.t+=dt;const k=Math.min(1,tw.t/tw.d);tw.fn(k);if(k>=1){tweens.splice(tweens.indexOf(tw),1);tw.res()}}}
@@ -1534,8 +1542,12 @@ let last=performance.now(),ambT=0;const shakeOff=new THREE.Vector3();
   if(net.pending&&!busy&&!replayEv){const p=net.pending;net.pending=null;considerRemote(p)}
   controls.update();
   if(shakeAmt>.001){shakeOff.set((Math.random()-.5)*shakeAmt,(Math.random()-.5)*shakeAmt,(Math.random()-.5)*shakeAmt);camera.position.add(shakeOff);shakeAmt*=Math.pow(.02,rdt)}else shakeOff.set(0,0,0);
-  renderer.render(scene,camera);
+  const covered=!$('cut').hidden||!$('cards').hidden;
+  if(!covered||(frameNo++%6===0))renderer.render(scene,camera);
   camera.position.sub(shakeOff);
+  if(!covered){fpsAcc+=rdt;fpsN++;if(fpsAcc>3){const fps=fpsN/fpsAcc;fpsAcc=0;fpsN=0;
+    if(fps<38&&dynPR>1){dynPR=Math.max(1,dynPR-.25);renderer.setPixelRatio(dynPR);resize()}
+    else if(fps>57&&dynPR<Q.pr){dynPR=Math.min(Q.pr,dynPR+.25);renderer.setPixelRatio(dynPR);resize()}}}
   requestAnimationFrame(loop);
 })(last);
 
