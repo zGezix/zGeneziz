@@ -252,7 +252,7 @@ input[type=text]{width:100%;box-sizing:border-box;font:500 16px var(--body);padd
       <li>ถ้ากินได้ต้องกิน กินต่อหลายตัวในตาเดียวได้ (คอมโบ!)</li>
       <li>ถึงแถวสุดท้ายฝั่งตรงข้ามจะเป็น <b>ฮอส</b> เดินทแยงไกลทุกทิศ กินแล้วลงช่องถัดจากตัวที่กินทันที</li>
       <li>ตาที่กินได้ มีโอกาส 60% เปิดการ์ด 3 ใบ เลือก 1 ใบให้หมากตัวที่กิน หมาก 1 ตัวมีการ์ดตำนานได้ 1 ใบ</li>
-      <li>ทุกตามีโอกาส 20% ที่ไอเท็มจะโผล่บนกระดาน เดินไปลงช่องนั้นเพื่อเก็บ กดใช้ไอเท็มแทนการเดิน แล้วจะจบตาทันที</li>
+      <li>ทุกตามีโอกาส 8% ที่ไอเท็มจะโผล่บนกระดาน (มีพร้อมกันได้ไม่เกิน 2 ชิ้น) เดินไปลงช่องนั้นเพื่อเก็บ กดใช้ไอเท็มแทนการเดิน แล้วจะจบตาทันที</li>
       <li>เริ่มใหม่ระหว่างเกมจะนับว่ายอมแพ้</li>
     </ul>
     <h3>การ์ดพลัง</h3>
@@ -918,7 +918,7 @@ function placeItem(r,c,k,fx){
 }
 function clearItems(){for(const i of items)scene.remove(i.g);items=[]}
 function maybeSpawnItem(){ // decided by the player who just moved; the result travels with the turn
-  if(items.length>=3||Math.random()>=.2)return null;
+  if(items.length>=2||Math.random()>=.08)return null;
   const empt=[];for(let r=0;r<8;r++)for(let c=0;c<8;c++)if((r+c)%2===1&&!board[r][c]&&!items.some(i=>i.r===r&&i.c===c))empt.push([r,c]);
   if(!empt.length)return null;const [r,c]=empt[Math.floor(Math.random()*empt.length)];const ks=Object.keys(ITEMS);
   return [r,c,ks[Math.floor(Math.random()*ks.length)]];
