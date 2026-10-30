@@ -665,7 +665,7 @@ function newGame(){
   resetTurnState();turn=0;over=false;pts=[0,0];moveCount=0;
   $('overOv').hidden=true;$('cards').hidden=true;refresh();
 }
-function resetTurnState(){selected=null;chain=null;jumped.clear();capCount=0;busy=false;cutThisTurn=false;rec=null}
+function resetTurnState(){selected=null;chain=null;jumped.clear();capCount=0;busy=false;cutThisTurn=false;rec=null;holdEnd=null}
 
 function stepsOf(pc){
   const caps=[],moves=[];if(pc.frozen>0)return {caps,moves};const fwd=pc.p===0?-1:1;
@@ -760,7 +760,7 @@ function showInfo(pc){
 }
 
 /* ================= Turn flow ================= */
-let rec=null,replayEv=null;
+let rec=null,replayEv=null,holdEnd=null;
 function resolveHit(v,attP){ // returns how the hit was absorbed; removes the piece (and scores it) if it dies
   if(v.shield){v.shield=false;jumped.add(v.id);return 'shield'}
   if(v.lives>0){v.lives--;jumped.add(v.id);return 'life'}
@@ -821,6 +821,9 @@ async function doStep(s){
     if(more.length){chain=pc;selected=pc;busy=false;
       if(mine){net.seq++;pushPresence({ev:{seq:net.seq,s:rec.s,c:null,part:1}});rec=null}
       refresh();if(isAI(turn))setTimeout(aiStep,500);return}}
+  // show the finished move to the other side right away, before any card is picked
+  if(mine){net.seq++;pushPresence({ev:{seq:net.seq,s:rec.s,c:null,part:1}});rec=null}
+  if(replayEv&&replayEv.part){holdEnd={pc,gid};busy=false;refresh();return} // wait for the mover's card / turn end
   await endTurn(pc,gid);
 }
 const ghostMat=new THREE.MeshBasicMaterial({color:0x6a5aa8,transparent:true,opacity:.5,depthWrite:false});
@@ -919,7 +922,7 @@ async function endTurn(pc,gid){
   if(legal.size===0&&allPieces().some(q=>q.p===turn&&q.frozen)){for(const q of allPieces())if(q.frozen){q.frozen=0;syncVisual(q)}legal=legalFor(turn)}
   if(count(turn)===0||legal.size===0){over=true}
   busy=false;
-  if(mode==='online'&&!replayEv&&mover===net.side){net.seq++;pushPresence({ev:{seq:net.seq,s:(rec&&rec.s)||[],c:(rec&&rec.c)||null}});rec=null}
+  if(mode==='online'&&!replayEv&&mover===net.side){net.seq++;pushPresence({ev:{seq:net.seq,s:(rec&&rec.s)||[],c:(rec&&rec.c)||null,end:1}});rec=null}
   refresh();
   if(over)return gameOver(1-turn);
   const humanNow=(mode==='ai'&&turn===0)||(mode==='online'&&turn===net.side);
@@ -981,7 +984,7 @@ async function drawCards(pc){
     const pri=['star','time','moon','dragon','awaken','thunder','blade','frost','warp','shield','thorn','phoenix','dash','push','clone','shadow'];
     pick=pri.find(k=>pool.includes(k));toast('บอทเปิดได้การ์ด: '+CARDS[pick].name);await sleep(500);
   }else{choosingCard=true;pushPresence();pick=await chooseCard(pool);choosingCard=false}
-  if(rec)rec.c=pick;
+  if(mode==='online'&&!replayEv){rec=rec||{s:[],c:null};rec.c=pick}
   await applyCard(pc,pick);
 }
 function chooseCard(pool){
@@ -1381,7 +1384,8 @@ function considerRemote(pr){
 async function replayRemote(pr){
   replayEv=pr.ev;busy=true;
   try{
-    for(const st of pr.ev.s){
+    if(pr.ev.end&&!pr.ev.s.length){if(!holdEnd)throw 0;const h=holdEnd;holdEnd=null;await endTurn(h.pc,h.gid)}
+    else for(const st of pr.ev.s){
       if(!Array.isArray(st)||st.length!==4)throw 0;
       const [r,c,tr,tc]=st.map(Number);if(!inB(r,c)||!inB(tr,tc))throw 0;
       busy=false;const legal=legalFor(turn);const pc=board[r][c];const s=pc&&legal.get(pc)&&legal.get(pc).find(x=>x.tr===tr&&x.tc===tc);
